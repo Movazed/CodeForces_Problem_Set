@@ -161,11 +161,25 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
-
+ll sum(ll n1) {
+    return (n1*(n1+1))/2;
+}
 
 void solve() {
         //apply code only the testcase part loop is on the int main function...... 
-             
+    ll n,x,y,gcd;
+    cin >> n >> x >>y;
+
+    ll a = n / x;
+    ll b = n / y;
+
+    ll lcm = (x * y)/__gcd(x,y);
+    ll c = n /lcm;
+
+    ll a1 = a - c;
+    ll b1 = b - c;
+
+    cout <<(sum(n) - sum(n - a1)) - sum(b1)<<nl;         
         
 }
 
