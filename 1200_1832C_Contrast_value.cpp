@@ -166,10 +166,39 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 void solve() {
         //apply code only the testcase part loop is on the int main function......      
-        
+        ll n;
+        cin >> n;
+        vector<ll> v(n);
+        for (ll i = 0; i < n; i++)
+        {
+            cin >> v[i];
+
+        if(n == 1)
+        {
+            cout << 1 << "\n";
+            continue;
+        }
+        }
+
+        vector<ll> temp = {v[0]};
+        for (ll i = 1; i < n - 1; i++)
+        {
+            if(temp.back() <= v[i] && v[i] <= v[i + 1] || temp.back() >= v[i] && v[i] >= v[i + 1]){
+                continue;
+            }
+            temp.push_back(v[i]);
+        }
+        temp.push_back(v[n - 1]);
+
+        if(temp.size() == 2 && temp[0] == temp[1]){
+            cout << 1 << nl;
+        }
+        else{
+            cout << temp.size() << nl;
+        }
 }
 
-int main() {
+int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
