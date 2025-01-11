@@ -1,5 +1,4 @@
 #include<bits/stdc++.h>
-
 using namespace std;
 
 #pragma GCC optimize("Ofast,unroll-loops") 
@@ -165,7 +164,40 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-        //apply code only the testcase part loop is on the int main function......      
+    ll n;
+    cin >> n;
+    vector<ll> a(n);
+
+    for (ll i = 0; i < n; i++) {
+        ll x;
+        cin >> x;
+        a[i] -= x;
+    }
+
+    for (ll i = 0; i < n; i++) {
+        ll x;
+        cin >> x;
+        a[i] += x;
+    }
+
+    // Sort the array in ascending order
+    sort(a.begin(), a.end());
+
+    ll l = 0, r = n - 1;
+    ll ans = 0;
+
+    while (l < r) {
+        // Check if the sum of the two pointers is non-negative
+        if (a[l] + a[r] >= 0) {
+            ans++;
+            l++; // Move left pointer
+            r--; // Move right pointer
+        } else {
+            l++; // Move left pointer to try a larger value
+        }
+    }
+
+    cout << ans << "\n";
 }
 
 int32_t main() {
