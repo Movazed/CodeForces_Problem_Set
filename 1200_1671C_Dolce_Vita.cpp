@@ -165,7 +165,26 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-          
+    ll n, x;
+    cin >> n >> x;
+    ll a[n],i;
+
+    for(ll i = 0; i < n; i++){
+        cin >> a[i];
+    }
+
+    sort(a, a+n);
+    ll sum = 0, ans = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        sum += a[i];
+
+        if(sum <= x){
+            ans += (x - sum)/(i + 1) + 1;
+        }
+    }
+    cout << ans << endl;
+    
 }
 
 int32_t main() {
