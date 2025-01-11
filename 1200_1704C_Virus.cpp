@@ -157,7 +157,7 @@ template <typename T> inline T Cone (T radius,T base, T height)
 
 // Constants
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-const int N = 200013;
+
 // Helper Functions
 bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
@@ -165,50 +165,38 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    ll n, a[N], b[N];
-    ll q;
-    cin >> n >> q;
+    ll n, m;
+    cin >> n >> m;
 
-    ll sum = 0;
-    for (ll i = 0; i <= n; ++i)
-    {
-        cin >> a[i];
-        sum += a[i];
+    vector<ll> f(m);
+
+    for(ll p = 0; p < m; p++){
+        cin >> f[p];
     }
+    sort(all(f));
 
-    ll lastUpdateFlag = 0;
-    ll globalValue = 0;
+    vector<ll> g(m);
 
-    for (ll i = 0; i <= q; i++)
+    g[0] = (n - f.back() + f[0] - 1);
+    for (ll p = 1; p < m; p++)
     {
-        ll op;
-        cin >> op;
+        g[p] = f[p] - f[p - 1] - 1;
+    }
+    sort(rall(g));
+    ll saved(0);
 
-
-        if(op == 1){
-            ll index, newValue;
-            cin >> index >> newValue;
-
-            if(b[index] < lastUpdateFlag){
-                sum -= globalValue;
-            } else {
-                sum -= a[index];
-            }
-
-            a[index] = newValue;
-            sum += newValue;
-
-            b[index] = i;
-        } else if(op == 2){
-            ll newValue;
-            cin >> newValue;
-
-            sum == (ll)newValue * n;
-            lastUpdateFlag = i;
-            globalValue = newValue;
+    for(ll p = 0; p < g.size(); p++){
+        g[p] -= 4 * p;
+        if(g[p] == 1){
+            ++saved;
         }
-        cout << sum << nl;
+        else if(g[p] > 1){
+            saved += (g[p] - 1);
+        } else {
+            break;
+        }
     }
+    cout << n - saved << endl;
 }
 
 int32_t main() {

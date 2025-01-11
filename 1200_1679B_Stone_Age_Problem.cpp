@@ -157,7 +157,7 @@ template <typename T> inline T Cone (T radius,T base, T height)
 
 // Constants
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-const int N = 200013;
+const int X = 200013;
 // Helper Functions
 bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
@@ -165,49 +165,52 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    ll n, a[N], b[N];
-    ll q;
-    cin >> n >> q;
-
-    ll sum = 0;
-    for (ll i = 0; i <= n; ++i)
+    ll n,q;
+    cin>>n>>q;
+    ll ar[n+4];
+    map<ll,ll>mp1,mp2;
+    ll sum=0;
+    for(ll i=1;i<=n;i++)
     {
-        cin >> a[i];
-        sum += a[i];
+        cin>>ar[i];
+        sum+=ar[i];
     }
-
-    ll lastUpdateFlag = 0;
-    ll globalValue = 0;
-
-    for (ll i = 0; i <= q; i++)
+    ll up=-1;
+    while(q--)
     {
-        ll op;
-        cin >> op;
-
-
-        if(op == 1){
-            ll index, newValue;
-            cin >> index >> newValue;
-
-            if(b[index] < lastUpdateFlag){
-                sum -= globalValue;
-            } else {
-                sum -= a[index];
+        ll a;
+        cin>>a;
+        if(a==1)
+        {
+            ll i,x;
+            cin>>i>>x;
+            if(up==-1)
+            {
+                if(x>=ar[i])sum+=(x-ar[i]);
+                else sum-=(ar[i]-x);
+                ar[i]=x;
+                cout<<sum<<endl;
             }
-
-            a[index] = newValue;
-            sum += newValue;
-
-            b[index] = i;
-        } else if(op == 2){
-            ll newValue;
-            cin >> newValue;
-
-            sum == (ll)newValue * n;
-            lastUpdateFlag = i;
-            globalValue = newValue;
+            else
+            {
+                ll z;
+                if(mp1[i]==0)z=up;
+                else z=mp1[i];
+                if(x>=z)sum+=x-z;
+                else sum-=z-x;
+                cout<<sum<<endl;
+                mp1[i]=x;
+            }
         }
-        cout << sum << nl;
+        else
+        {
+            ll x;
+            cin>>x;
+            cout<<x*n<<endl;
+            sum=x*n;
+            mp1.clear();
+            up=x;
+        }
     }
 }
 

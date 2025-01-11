@@ -157,7 +157,7 @@ template <typename T> inline T Cone (T radius,T base, T height)
 
 // Constants
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-const int N = 200013;
+
 // Helper Functions
 bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
@@ -165,50 +165,30 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    ll n, a[N], b[N];
-    ll q;
-    cin >> n >> q;
-
-    ll sum = 0;
-    for (ll i = 0; i <= n; ++i)
-    {
-        cin >> a[i];
-        sum += a[i];
+    ll n;
+    cin >> n;
+    vector<string> v(n);
+    for(ll i = 0; i < n; i++){
+        cin >> v[i];
     }
 
-    ll lastUpdateFlag = 0;
-    ll globalValue = 0;
+    ll total = 0;
 
-    for (ll i = 0; i <= q; i++)
+    for (ll row = 0; row < n / 2; row++)
     {
-        ll op;
-        cin >> op;
+        for(ll col = row; col < n - 1 - row; col++)
+        {
+             char a = v[row][col];
+             char b = v[col][n - 1 - row];
+             char c = v[n - 1 - row][n - 1 - col];
+             char d = v[n - 1 - col][row];
+             ll cntZ = (a == '1') + (b == '1') + (c == '1') + (d == '1');
+             ll cntA = (a == '0') + (b == '0') + (c == '0') + (d == '0');
 
-
-        if(op == 1){
-            ll index, newValue;
-            cin >> index >> newValue;
-
-            if(b[index] < lastUpdateFlag){
-                sum -= globalValue;
-            } else {
-                sum -= a[index];
-            }
-
-            a[index] = newValue;
-            sum += newValue;
-
-            b[index] = i;
-        } else if(op == 2){
-            ll newValue;
-            cin >> newValue;
-
-            sum == (ll)newValue * n;
-            lastUpdateFlag = i;
-            globalValue = newValue;
+             total += (cntZ < cntA ? cntZ : cntA);
         }
-        cout << sum << nl;
     }
+    cout << total << endl;
 }
 
 int32_t main() {
