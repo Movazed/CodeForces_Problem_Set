@@ -165,52 +165,36 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    vector<ll>v1, v2;
-    v1.clear();
-    v2.clear();
-    ll n, sum = 0; 
+        //apply code only the testcase part loop is on the int main function......   
+    ll n;
     cin >> n;
-    string s;
-    cin >> s;
-
-    for (ll i = 1; i <= n; i++)
+    map<ll, ll> mp;
+    vector<ll> v;
+    vector<ll> array(n);
+    for (ll i = 0; i < n; i++)
     {
-        ll n;
-        stringstream ss;
-        ss << s[i - 1];
-        ss >> n;
-        v1.push_back(n);
-        v2.push_back(i);
-    }
-
-    for (ll i = 1; i <= n; i++){
-    if(v1[i - 1] == 0){
-        sum += v2[i - 1];
-
-        for(ll j = (i + i); j <= n; j += i){
-            if(v1[j - 1] == 0){
-                sum += v2[i - 1];
-                v1[j - 1] = 2;
-            }
-            else if(v1[j - 1] == 1) {
-                break;
-            }
+        cin >> array[i];
+        if(mp[array[i]] == 0){
+            v.push_back(array[i]);
         }
-    }    
-    else if ( v1[i - 1] == 2){
-        for (ll j = (i + 1); j <= n; j += i)
+        mp[array[i]]++;
+    }
+    ll c =  0;
+    sort(v.begin(), v.end());
+
+    for(ll i = 0; i < v.size(); i++){
+        while (mp[v[i]] > 0)
         {
-            if(v1[ j - 1] == 0){
-                sum += v2[i - 1];
-                v1[j - 1] = 2;
-            }
-            else if(v1[j - 1] == 1){
-                break;
-            }
-        }
+            c++;
+            mp[v[i]]--;
+            ll x = v[i];
+            while (mp[++x] > 0)
+            {
+                mp[x]--;
+            }   
+        }   
     }
-}
-cout << sum << endl;
+cout << c << endl;
 }
 
 int32_t main() {

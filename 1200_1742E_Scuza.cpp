@@ -165,52 +165,30 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    vector<ll>v1, v2;
-    v1.clear();
-    v2.clear();
-    ll n, sum = 0; 
-    cin >> n;
-    string s;
-    cin >> s;
+    ll n, q;
+    ll i;
+    cin >> n >> q;
+    vector<ll> v;
+    ll p[n + 5], cur = 0;
+    p[0] = 0;
+    for(ll i = 1; i <= n ; i++){
+        ll x;
+        cin >> x;
+        p[i] = p[i - 1] + x;
+        cur = max(cur, x);
+        v.push_back(cur);
+    }
 
-    for (ll i = 1; i <= n; i++)
+    while (q--)
     {
-        ll n;
-        stringstream ss;
-        ss << s[i - 1];
-        ss >> n;
-        v1.push_back(n);
-        v2.push_back(i);
-    }
+        ll x;
+        cin >> x;
 
-    for (ll i = 1; i <= n; i++){
-    if(v1[i - 1] == 0){
-        sum += v2[i - 1];
-
-        for(ll j = (i + i); j <= n; j += i){
-            if(v1[j - 1] == 0){
-                sum += v2[i - 1];
-                v1[j - 1] = 2;
-            }
-            else if(v1[j - 1] == 1) {
-                break;
-            }
-        }
-    }    
-    else if ( v1[i - 1] == 2){
-        for (ll j = (i + 1); j <= n; j += i)
-        {
-            if(v1[ j - 1] == 0){
-                sum += v2[i - 1];
-                v1[j - 1] = 2;
-            }
-            else if(v1[j - 1] == 1){
-                break;
-            }
-        }
+        ll pos = upper_bound(v.begin(), v.end(), x) - v.begin();
+        cout << p[pos]<<" ";
     }
-}
-cout << sum << endl;
+    cout << endl;
+    
 }
 
 int32_t main() {
