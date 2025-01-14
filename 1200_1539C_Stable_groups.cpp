@@ -14,13 +14,11 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #else
 #define dbg(...)
 #endif
+#define vll vector<ll>
 #define nl std::endl
-#define vc vector<char>
 #define ar array
 #define ll long long
 #define ld long double
-#define vpll vector<pair<ll, ll>>
-#define vll vector<ll>
 #define sza(x) ((int)x.size())
 #define all(a) (a).begin(), (a).end()
 #define PRINT std::cout 
@@ -168,16 +166,45 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-        //apply code only the testcase part loop is on the int main function......      
+    ll n,k,x;
+    cin>>n>>k>>x;
+    ll ar[n+3];
+    for(ll i=1;i<=n;i++)cin>>ar[i];
+    sort(ar+1,ar+n+1);
+    vector<ll>ans;
+    int cnt=1;
+    for(ll i=1;i<n;i++)
+    {
+        if(ar[i+1]-ar[i]>x)
+        {
+            cnt++;
+            if(ar[i+1]-ar[i]-1>=1)
+            {
+                ans.push_back(ar[i+1]-ar[i]-1);
+            }
+        }
+    }
+    sort(ans.begin(),ans.end());
+    for(ll i=0;i<ans.size();i++)
+    {
+        ll xx=ans[i];
+        if(xx/x<=k && k>0)
+        {
+            cnt--;
+            k-=(xx/x);
+        }
+        else break;
+    }
+    cout<<cnt<<endl;
+
+    
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    int tc = 1;
-    cin >> tc;
-    for (int t = 1; t <= tc; t++) {
+
         solve();
-    }
+
 }

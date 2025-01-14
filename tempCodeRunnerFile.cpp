@@ -14,6 +14,7 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #else
 #define dbg(...)
 #endif
+#define vll vector<ll>
 #define nl std::endl
 #define ar array
 #define ll long long
@@ -165,25 +166,35 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    ll n, x;
-    cin >> n >> x;
-    ll a[n],i;
+    ll n, k, x;
+    cin >> n >> k >> x;
 
+    ll ar[n];
     for(ll i = 0; i < n; i++){
-        cin >> a[i];
+        cin >> ar[i];
     }
 
-    sort(a, a+n);
-    ll sum = 0, ans = 0;
-    for (ll i = 0; i < n; i++)
+    sort(ar, ar + n);
+    vll v;
+    for (ll i = 0; i < n - 1; i++)
     {
-        sum += a[i];
-
-        if(sum <= x){
-            ans += (x - sum)/(i + 1) + 1;
+        if(ar[i + 1] - ar[i] > x){
+            v.push_back(ar[i + 1] - ar[i]);
         }
     }
-    cout << ans << endl;
+    sort(all(v));
+    ll i = 0;
+    while (i , v.size())
+    {
+        if((v[i] - 1) / x <= k){
+            k -= (v[i] - 1) / x;
+            i++;
+        } else {
+            break;
+        }
+    }
+    cout << v.size() - i + 1 << nl;
+    
     
 }
 

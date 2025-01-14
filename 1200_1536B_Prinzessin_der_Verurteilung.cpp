@@ -168,7 +168,17 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-        //apply code only the testcase part loop is on the int main function......      
+    ll n;
+    string s;
+    cin >> n >> s;
+
+    vc alphabet;
+
+    for (char ch = 'a'; ch <= 'z'; ++ch)
+    {
+        alphabet.pb(ch);
+    }
+    
 }
 
 int32_t main() {
