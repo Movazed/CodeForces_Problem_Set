@@ -169,88 +169,24 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 void solve() {
     ll n;
-    string s;
-    cin >> n >> s;
-
-    vc alphabet;
-
-    for (char ch = 'a'; ch <= 'z'; ++ch)
-    {
-        alphabet.pb(ch);
-    }
-    
-    for(char ch : alphabet){
-        bool found = false;
-        for(char c : s){
-            if (c == ch){
-                found = true;
-                break;
-            }
-        }
-        if(!found){
-            cout << ch << nl;
-            return;
+    cin >> n;
+    string str;
+    cin.ignore();
+    getline(cin, str);
+    cin.clear();
+    ll zero = 0;
+    for(ll i = 0; i < n; ++i){
+        if(str[i] == '0'){
+            zero++;
         }
     }
 
-    set<string> twoCharsStrings;
-
-    for(char ch1: alphabet){
-        for(char ch2: alphabet){
-            string temp;
-            temp.pb(ch1);
-            temp.pb(ch2);
-            twoCharsStrings.insert(temp);
-        }
-    }
-
-    for(const string& str: twoCharsStrings){
-        bool found = false;
-
-        for(ll i = 0; i <= n - 2; ++i){
-            if(s.substr(i, 2) == str){
-                found = true;
-                break;
-            }
-        }
-
-        if(!found){
-            cout << str << nl;
-            return;
-        }
-    }
-
-    set<string> threeCharsStrings;
-
-    for(char ch1: alphabet){
-        for(char ch2: alphabet){
-            for (char ch3: alphabet)
-            {
-                string temp;
-                temp.pb(ch1);
-                temp.pb(ch2);
-                temp.pb(ch3);
-                threeCharsStrings.insert(temp);              
-
-            }
-            
-        }
-    }
-
-    for (const string& str : threeCharsStrings){
-        bool found = false;
-
-        for(ll i = 0; i <= n - 3; ++i){
-            if(s.substr(i, 3) == str){
-                found = true;
-                break;
-            }
-        }
-
-        if(!found){
-            cout << str << nl;
-            return;
-        }
+    if(zero == 2 && n %2 != 0 && str[n / 2] =='0'){
+        cout << "DRAW\n";
+    } else if(zero == 1 || zero % 2 == 0){
+        cout << "BOB\n";
+    } else {
+        cout << "ALICE\n";
     }
 }
 
