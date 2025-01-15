@@ -15,9 +15,7 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define dbg(...)
 #endif
 #define nl std::endl
-#define vi vector<int>
 #define vc vector<char>
-#define vll vector<ll>
 #define ar array
 #define ll long long
 #define ld long double
@@ -171,7 +169,56 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 void solve() {
         //apply code only the testcase part loop is on the int main function......      
-}
+        int n;
+        cin >> n;
+        string a;
+        cin >> a;
+        string b;
+        cin >> b;
+        
+
+        int zero = 0, one = 0, last = -1;
+        bool ans = true;
+        for(int i = 0; i < n; i++){
+            // update ones and zeros
+            if(a[i] == '0')
+                zero++;
+            else
+                one++;
+            
+
+            if(zero == one){
+                int j = i;
+                bool isSame = a[i] == b[i];
+                while(j > last){
+                    if(isSame == true && a[j] != b[j]){
+                        ans = false;
+                        break;
+                    }else if(isSame == false && a[j] == b[j]){
+                        ans = false;
+                        break;
+                    }
+                    j--;
+                }
+                if(ans == false)
+                    break;
+                last = i; // update last to current index.
+            }
+        }
+        // since from last to n-1 is not a valid prefix we can't inverse that's digits so they must be same.
+        for(int i = n-1; i > last; i--){
+            if(a[i] != b[i]){
+                ans = false;
+                break;
+            }
+        }
+        // print answer.
+        if(ans)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
+    }
+
 
 int32_t main() {
     ios_base::sync_with_stdio(0);

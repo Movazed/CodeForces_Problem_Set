@@ -15,9 +15,7 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define dbg(...)
 #endif
 #define nl std::endl
-#define vi vector<int>
 #define vc vector<char>
-#define vll vector<ll>
 #define ar array
 #define ll long long
 #define ld long double
@@ -168,9 +166,15 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-
 void solve() {
-        //apply code only the testcase part loop is on the int main function......      
+        //apply code only the testcase part loop is on the int main function......    
+        ll n, k;
+        cin >> n >> k;
+        ll num = 1;
+        for(ll i = 0; i < k; i++){
+            num = (num * n)%MOD;
+        }  
+        cout << num << nl;
 }
 
 int32_t main() {

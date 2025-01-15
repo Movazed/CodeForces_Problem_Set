@@ -171,6 +171,35 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 void solve() {
         //apply code only the testcase part loop is on the int main function......      
+      int n;
+  cin>>n;
+  set<int> s;
+  vector<int> v(n);
+  map<int,vector<int>> mp;
+  for(int i=0;i<n;i++){
+      cin>>v[i];  // v[i] is the gang type that controls i th district
+      s.insert(v[i]);  // which counts different type of gangs
+      mp[v[i]].push_back(i);  // i is the district
+  }
+  
+  if(s.size()==1){
+      cout<<"NO"<<endl;
+  }
+  else{
+      cout<<"YES"<<endl;
+      vector<vector<int>> districts;
+      for(auto x: mp){
+          districts.push_back(x.second);
+      }
+      for(int i=1;i<districts.size();i++){
+          for(auto j : districts[i]){
+              cout<< districts[0][0]+1 <<" "<<j+1<<endl;
+          }
+      }
+      for(int i=1;i<districts[0].size();i++){
+          cout<<districts[0][i]+1<<" "<<districts[1][0]+1<<endl;
+      }
+  }
 }
 
 int32_t main() {

@@ -171,6 +171,18 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 void solve() {
         //apply code only the testcase part loop is on the int main function......      
+        ll n,k;
+        cin>>n>>k;
+        k--;
+        if(n%2==0){
+            ll ans=(k%n);
+            cout<<ans+1<<"\n";
+        }
+        else{
+            ll mid=(n/2);
+            ll ans=((k/mid)+k)%n;
+            cout<<ans+1<<"\n";
+        }
 }
 
 int32_t main() {

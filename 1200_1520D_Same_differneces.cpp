@@ -15,9 +15,7 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define dbg(...)
 #endif
 #define nl std::endl
-#define vi vector<int>
 #define vc vector<char>
-#define vll vector<ll>
 #define ar array
 #define ll long long
 #define ld long double
@@ -170,7 +168,17 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-        //apply code only the testcase part loop is on the int main function......      
+    ll n;
+    cin >> n;
+    ll x;
+    map<ll, ll> mp;
+    ll maxi = 0;
+    for(ll i = 0; i < n; i++){
+        cin >> x;
+        maxi += mp[x - i];
+        mp[x - i]++;
+    }
+    cout <<maxi << nl;
 }
 
 int32_t main() {
