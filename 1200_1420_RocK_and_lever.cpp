@@ -1,9 +1,3 @@
-/** ========================================**
- ** @Author: Kareem Taha Abdelfatah
- ** @Category: Codeforces problems solutions
- ** @brief: Problem Solving solutions
-/** ========================================**/
-
 #include<bits/stdc++.h>
 #include<iterator>
 using namespace std;
