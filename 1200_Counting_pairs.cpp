@@ -168,37 +168,27 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-ll mod = 998244353;
+ll a[200005];
 void solve() {
-    ll n, extras = 0, min_ops = 0, fact = 1, res = 1;
-    string s;
-    cin >> s;
-    vll v;
-    n = (ll)s.size();
-    for (ll i = 0; i < (n - 1); i++)
-    {
-        if(s[i] == s[i + 1]){
-            extras++;
-        } else {
-            min_ops += extras;
-            extras++;
-            res = (res % mod * extras % mod)%mod;
-            extras = 0;
+    ll n, x, y, sum = 0, ans = 0;
+    cin >> n >> x >> y;  // Read n from input
+    for (ll i = 0; i < n; i++) {
+        cin >> a[i];
+        sum += a[i];
+    }
+    a[n] = 1e14;  // Sentinel value to avoid out-of-bounds
+    sort(a, a + n);
+
+    for (ll i = n - 1, j = 0, k = 0; i >= 0; i--) {
+        while (j < n && a[j] + a[i] < sum - y) {
+            j++;
         }
+        while (k < n && a[k] + a[i] <= sum - x) {
+            k++;
+        }
+        ans += max(0LL, min(k, i) - min(j, i));
     }
-    if(extras != 0){
-        min_ops+=extras;
-        extras++;
-        res = (res%mod * extras%mod)%mod;
-    }
-    
-    for(ll i = 1; i <= min_ops; i++){
-        fact = ((fact%mod) * (i % mod)) % mod;
-    }
-    
-    res = ((res % mod) * (fact % mod)) % mod;
-    cout << min_ops <<" "<<res<<nl;
-    
+    cout << ans << endl;  // Use endl or "\n" for newline
 }
 
 int32_t main() {

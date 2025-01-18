@@ -168,36 +168,28 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-ll mod = 998244353;
+
 void solve() {
-    ll n, extras = 0, min_ops = 0, fact = 1, res = 1;
-    string s;
-    cin >> s;
-    vll v;
-    n = (ll)s.size();
-    for (ll i = 0; i < (n - 1); i++)
+    ll n, m, k;
+    cin >> n >> m >> k;
+    vll a(m), b(n + 1);
+    for (ll i = 0; i < m; i++)
     {
-        if(s[i] == s[i + 1]){
-            extras++;
-        } else {
-            min_ops += extras;
-            extras++;
-            res = (res % mod * extras % mod)%mod;
-            extras = 0;
-        }
+        cin >> a[i];
     }
-    if(extras != 0){
-        min_ops+=extras;
-        extras++;
-        res = (res%mod * extras%mod)%mod;
+
+    for (ll i = 0; i < k; i++)
+    {
+        ll x;
+        cin >> x;
+        b[x]++;
     }
+
+    for(const auto&i : a){
+        cout << (k < n - 1?0 : (k == n?1:!b[i]));
+    }
+    cout << nl;
     
-    for(ll i = 1; i <= min_ops; i++){
-        fact = ((fact%mod) * (i % mod)) % mod;
-    }
-    
-    res = ((res % mod) * (fact % mod)) % mod;
-    cout << min_ops <<" "<<res<<nl;
     
 }
 
