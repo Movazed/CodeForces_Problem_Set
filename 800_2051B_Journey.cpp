@@ -1,3 +1,5 @@
+
+
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -170,23 +172,10 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-      ll n, x, y, a;
-      ll count;
-      map<pair<ll ,ll>, ll> mp;
-
-      count = 0;
-
-      cin >> n >> x >> y;
-    while (n--)
-    {
-      cin >> a;
-
-      count = count + mp[{(x - a % x) % x, a % y}];
-
-      mp[{a % x, a % y}]++;
-    }
-    cout << count <<nl;
-
+        //apply code only the testcase part loop is on the int main function......    
+        ll n,a,b,c;
+        cin>>n>>a>>b>>c;
+		cout<<n/(a+b+c)*3+(n%(a+b+c)>0)+(n%(a+b+c)>a)+(n%(a+b+c)>a+b)<<'\n';  
 }
 
 int32_t main() {
