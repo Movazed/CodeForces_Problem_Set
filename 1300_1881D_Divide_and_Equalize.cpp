@@ -168,9 +168,52 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+void getPrime(ll p, map<ll, ll>&ma){
+    while (p % 2 == 0)
+    {
+        ma[2]++;
+        p = p / 2;
+    }
+
+    for(ll i = 3; i <= sqrt(p); i++){
+        while (p % i == 0)
+        {
+            ma[i]++;
+            p = p / i;
+        }
+    }
+    if(p > 1){
+        ma[p]++;
+    }
+    
+}
 
 void solve() {
+    map<ll, ll> ma;
+    ll n, b, f = 0;
+    cin >> n;
+
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> b;
+        getPrime(b,ma);
+    }
+    map<ll, ll> :: iterator it;
+    for (it = ma.begin(); it!= ma.end(); it++)
+    {
+        if(it->second % n != 0){
+            f = 1;
+            break;
+        }
+    }
+
+    if(f == 0){
+        cout << "YES" << nl;
+    } else {
+        cout << "NO" << nl;
+    }
     
+                 
 }
 
 int32_t main() {
