@@ -176,6 +176,28 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
+    ll n;
+    cin >> n;
+    vll a(n);
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+    priority_queue<ll> pq;
+
+    for(ll i = 0; i < n; i++){
+        pq.push(-1 * a[i]);
+        while (pq.size() > (-1 * pq.top()))
+        {
+            pq.pop();
+        }
+        
+        ll t1 = pq.size();
+        cout << max(1LL, t1) << " ";
+        
+    }
+    cout << nl;
     
 }
 

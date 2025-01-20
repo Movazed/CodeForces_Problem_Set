@@ -174,9 +174,34 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-
+ll ara[1000005];
 void solve() {
-    
+    long long t,n,i,j,x,p;
+    for(i=2;i*i<=1000000;i++)
+    {
+        //if(ara[i]==0)
+        {
+            x=1+i+i*i;
+            p=2;
+            while(x<=1000000)
+            {
+                ara[x]=1;
+                p++;
+                x+=power(i,p);
+                //if(x==15)
+                    //cout<<"here";
+            }
+        }
+    }
+    cin>>t;
+    while(t--)
+    {
+        cin>>x;
+        if(ara[x])
+            cout<<"YES\n";
+        else
+            cout<<"NO\n";
+    }
 }
 
 int32_t main() {
