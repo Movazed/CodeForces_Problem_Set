@@ -174,9 +174,37 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-
+ll sum (ll num){
+    return num * (num  + 1) / 2;
+}
 void solve() {
-    
+        ll k, x;
+        cin>>k>>x;
+        ll l = 1, tot = 2 * k - 1, r = 2 * k - 1;
+        bool big = false;
+        while (l <= r) {
+            ll mid = (l + r) >> 1;
+            if (mid >= k) {
+                if (sum (k) + sum (k - 1) - sum (2 * k - 1 - mid) >= x) {
+                    big = true;
+                } else {
+                    big = false;
+                }
+            } else {
+                if (sum (mid) >= x) {
+                    big = true;
+                } else {
+                    big = false;
+                }
+            }
+            if (big) {
+                tot = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        cout<<tot<<nl;
 }
 
 int32_t main() {
