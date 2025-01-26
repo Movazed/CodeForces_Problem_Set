@@ -174,44 +174,47 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-ll sum (ll num){
-    return num * (num  + 1) / 2;
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
 }
 void solve() {
-        ll k, x;
-        cin>>k>>x;
-        ll l = 1, tot = 2 * k - 1, r = 2 * k - 1;
-        bool big = false;
-        while (l <= r) {
-            ll mid = (l + r) >> 1;
-            if (mid >= k) {
-                if (sum (k) + sum (k - 1) - sum (2 * k - 1 - mid) >= x) {
-                    big = true;
-                } else {
-                    big = false;
-                }
-            } else {
-                if (sum (mid) >= x) {
-                    big = true;
-                } else {
-                    big = false;
-                }
-            }
-            if (big) {
-                tot = mid;
-                r = mid - 1;
-            } else {
-                l = mid + 1;
-            }
+    ll n;
+    cin >> n;
+
+    vll a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    ll val = 0;
+
+
+    for (ll j = 0; j < 30; j++) {
+        ll lav = 0;
+
+        for (ll i = 0; i < n; i++) {
+            lav += (a[i] >> j) & 1;
         }
-        cout<<tot<<nl;
+
+
+        val = gcd(val, lav);
+    }
+
+
+    for (ll i = 1; i <= (val ? val : n); i++) {
+        if (!val || !(val % i)) {
+            cout << i << " ";
+        }
+    }
+    cout << nl;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    int tc = 1;              
+    int tc = 1;
     cin >> tc;
     for (int t = 1; t <= tc; t++) {
         solve();
