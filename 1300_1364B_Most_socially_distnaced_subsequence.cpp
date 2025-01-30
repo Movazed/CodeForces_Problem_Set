@@ -176,26 +176,35 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-    ll n, x, m;
-    cin>> n>> x>> m;
-
-    ll sum = 0;
-    vpll vector;
-    ll l = x, r = x;
-
-    for(ll i = 0; i < m; i++){
-        ll p, q;
-        cin >> p>> q;
-
-        if(q < l || p > r){
-            continue;
-        } else {
-            l = min(l, p);
-            r = max(r, q);
+    ll n;
+    cin >> n;
+    vll a;
+    for(ll i = 0,temp; i < n; i++){
+        cin >> temp;
+        a.emplace_back(temp);
+    }
+    ll i = 0, j = 1;
+    vll ans;
+    ans.emplace_back(a[i]);
+    while (i < n - 2 && j < n - 1)
+    {
+        if(abs(a[j] - a[i]) + abs(a[j + 1] - a[j]) > abs(a[j + 1] - a[i]))
+        {
+            i = j;
+            ans.emplace_back(a[i]);
         }
+        j++;
     }
 
-    cout << r - l + 1 << nl;
+    ans.emplace_back(a[n - 1]);
+    cout << ans.size() << nl;
+    for (auto i : ans)
+    {
+        cout << i << " ";
+    }
+    cout <<endl;
+    
+    
 }
 
 int32_t main() {
