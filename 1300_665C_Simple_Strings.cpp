@@ -174,44 +174,31 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-int const NUM = 1e5 + 1, oo = 2e9;
-ll n,m,q,k,x,y,s1,s2;
-
-vector<vll> g;
-
-void DFS(ll v, ll p, ll lvl){
-    s1 += (lvl % 2 == 0);
-    s2 += (lvl % 2 == 1);
-
-    for(ll i = 0; i < (ll)g[v].size(); i++){
-        ll u = g[v][i];
-        if(u != p){
-            DFS(u, v, lvl + 1);
-        }
-    }
-}
 
 void solve() {
-    cin >> n;
-    g.resize(n);
-
-    for(ll i = 0, a, b; i < n - 1; ++i){
-        cin >> a >> b;
-        --a, --b;
-        g[a].pb(b);
-        swap(a, b);
-        g[a].pb(b);
+    ll i, j, cnt, x, y;
+    string str;
+    while (cin >> str)
+    {
+        for(i = 1; i < str.size(); i++){
+            if(str[i] == str[i - 1]){
+                for(j = 'a'; j <= 'z'; j++){
+                    if(str[i+1] != j && str[i - 1]!=j){
+                        str[i] = j;
+                        break;
+                    }
+                }
+            }
+        }
     }
-
-    DFS(0, -1, 0);
-
-    cout << (1LL * s1 * s2) - (n - 1);
+    cout << str << nl;
+    
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    solve();
+        solve();
 
 }

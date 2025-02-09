@@ -174,44 +174,45 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-int const NUM = 1e5 + 1, oo = 2e9;
-ll n,m,q,k,x,y,s1,s2;
-
-vector<vll> g;
-
-void DFS(ll v, ll p, ll lvl){
-    s1 += (lvl % 2 == 0);
-    s2 += (lvl % 2 == 1);
-
-    for(ll i = 0; i < (ll)g[v].size(); i++){
-        ll u = g[v][i];
-        if(u != p){
-            DFS(u, v, lvl + 1);
-        }
-    }
-}
 
 void solve() {
-    cin >> n;
-    g.resize(n);
+    ll i, j, k;
+    ll n;
 
-    for(ll i = 0, a, b; i < n - 1; ++i){
-        cin >> a >> b;
-        --a, --b;
-        g[a].pb(b);
-        swap(a, b);
-        g[a].pb(b);
+    cin >> n >> k;
+
+    vll a(n);
+
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> a[i];
     }
 
-    DFS(0, -1, 0);
+    ll sum = 0;
+    ld fin = 0;
+    for(ll i = 0; i < k; i++){
+        sum += a[i];
+    }
+    fin = sum;
 
-    cout << (1LL * s1 * s2) - (n - 1);
+    j = k;
+
+    for(ll i = 1; i < n - k + 1; i++){
+        sum -= a[i - 1];
+        sum += a[j];
+
+        j++;
+        fin += sum;
+    }
+
+    fin = fin / (n - k + 1);
+    cout << fixed << setprecision(100) << fin << "\n";  // Ensure decimal output
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    solve();
 
+        solve();
 }
