@@ -176,47 +176,30 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-
-    ll  n;
+    ll n;
+    ll x;
     cin >> n;
-    vector< ll > vec(n) , dp(n);
-    
-    for(ll i=0; i<n; i++)
-        dp[i]=1;
-        
-    for(ll i=0; i<n; i++)
-            cin>>vec[i];
-            
-    for(ll i=0; i<n; i++){
-        
-        ll keep=i+1;
-        
-        for(ll j=keep*2; j<=n; j+=keep){
-            
-            if(vec[j-1]>vec[i]){
-                
-                dp[j-1]=max(dp[j-1], dp[i]+1);
-                
-            }
-        }
-    } 
+    map<ll, ll> dp;
+    ll mx = 0;
 
-    ll xxx=0;
-    
-    for(ll i=0; i<n; i++)
-        xxx=max(xxx, dp[i]);
-        
-    cout<<xxx<<endl;
-
+    for(ll i = 0; i < n; i++){
+        cin >> x;
+        ll diff = x - i;
+        if(dp.find(diff) == dp.end()){
+            dp[diff] = x;
+    } else {
+        dp[diff] += x;
+    }
+    mx = max(mx, dp[diff]);
+    }
+    cout << mx << nl;
 }
+
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    int tc = 1;
-    cin >> tc;
-    for (int t = 1; t <= tc; t++) {
-        solve();
-    }
+    solve();
+
 }
