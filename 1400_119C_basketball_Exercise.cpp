@@ -187,7 +187,6 @@ void solve() {
         dp1[i]=max(dp1[i-1],a[i]+dp2[i-1]);
         dp2[i]=max(dp2[i-1],b[i]+dp1[i-1]);
     }
- 
     cout<<max(dp1[n],dp2[n]);
 }
 
