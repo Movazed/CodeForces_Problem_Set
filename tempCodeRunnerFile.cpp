@@ -1,1 +1,1 @@
-const ld EPS = 1e-9;
+MAX_N
