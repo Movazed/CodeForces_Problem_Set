@@ -174,28 +174,54 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-const int exp_size = 1003;
-int x[exp_size], y[exp_size];
+int weight[MAX_N];
+int degree[MAX_N];
+int order[MAX_N];
+ll answers[MAX_N];
 
 void solve() {
     int n;
     cin >> n;
-
-    for(int i = 0; i < n; i++){
-        cin >> x[i] >> y[i];
+    
+    vector<int> weight(n), degree(n), order(n), answers(n - 1);
+    
+    for(int i = 0; i < n; ++i) {
+        cin >> weight[i];
+        degree[i] = 0;
+        order[i] = i;
     }
-    sort(x, x + n);
-    sort(y, y + n);
 
-    if(n % 2){
-        cout << 1 << '\n';
-    } else {
-        long long width = x[n / 2] - x[n / 2 - 1] + 1;
-        long long height = y[n / 2] - y[n / 2 - 1] + 1;
-        cout << width * height << '\n';
+    ll cur = 0;
+    
+    for(int e = 0; e < n - 1; ++e) {
+        int u, v;
+        cin >> u >> v;
+        --u;
+        --v;
+        ++degree[u];
+        ++degree[v];
+        cur += weight[u] + weight[v];
     }
+    
+    sort(order.begin(), order.end(), [&](int u, int v) {
+        return weight[u] < weight[v];
+    });
+    
+    int i = 0;
+    for(int j = n - 2; j >= 0; --j) {
+        answers[j] = cur;
+        while(i < n && degree[order[i]] == 1) ++i;
+        if(i < n) {
+            cur -= weight[order[i]];
+            --degree[order[i]];
+        }
+    }
+    
+    for(int j = 0; j < n - 1; ++j) {
+        cout << answers[j] << ' ';
+    }
+    cout << '\n';
 }
-
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
