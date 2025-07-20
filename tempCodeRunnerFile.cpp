@@ -1,2 +1,2 @@
-include <ext/pb_ds/assoc_container.hpp>
-//#include <ext/pb_ds/tree_policy.hpp>
+
+        cout << "-1" << nl;
