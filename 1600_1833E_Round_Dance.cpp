@@ -174,9 +174,46 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+vector<set<int>> adj;
+vector<bool> vis;
+
+int circle = 0;
+
+bool dfs(int i, int parent = -1){
+    vis[i] = true;
+    for(auto& j: adj[i]){
+        if(!vis[j]){
+            dfs(j, i);
+        } else if(j != parent){
+            return true;
+        }
+    }
+    return false;
+}
 
 void solve() {
-    
+    int n;
+    cin >> n;
+    adj.clear();
+    vis.clear();
+    adj.resize(n + 5);
+    vis.resize(n + 5);
+    for(int i = 1; i <= n; i++){
+        int x;
+        cin >> x;
+        adj[i].insert(x);
+        adj[x].insert(i);
+    }
+
+    int connected = 0;
+    circle = 0;
+    for(int i = 1; i <= n; i++){
+        if(!vis[i]){
+            circle += dfs(i);
+            connected++;
+        }
+    }
+    cout << circle + (connected - circle > 0) << ' ' << connected << nl;
 }
 
 int32_t main() {
