@@ -176,7 +176,23 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-
+    ll n;
+    cin >> n;
+    vi a(n);
+    for(auto& i : a){
+        cin >> i;
+    }
+    vi b(n);
+        for(auto& i : b){
+        cin >> i;
+    }
+    vi temp;
+    for(int i = 0; i < n; i++){
+        temp.push_back(a[i] - b[i]);
+        temp.push_back(a[i] + b[i]);
+    }
+    sort(temp.begin(), temp.end());
+    cout << fixed << setprecision(4) << (temp.front() + temp.back()) / 2.0 << nl;
 }
 
 int32_t main() {

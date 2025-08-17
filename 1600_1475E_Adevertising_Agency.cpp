@@ -174,18 +174,57 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+ll C[1005][1005];
 
 void solve() {
 
+    for(int i = 1; i <= 1000; ++i)
+    {
+        C[i][0] = C[i][i] = 1;
+        for(int j = 1; j < i; ++j)
+        {
+            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+        }
+    }
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    int tc = 1;
-    cin >> tc;
-    for (int t = 1; t <= tc; t++) {
-        solve();
+    solve();
+    ll n, t, k, a;
+    cin >> t;
+
+    while(t--)
+    {
+        cin >> n >> k;
+        ll ans = 0;
+        map<ll, ll> freq;
+        vi v;
+        for(int i = 0; i < n; i++)
+        {
+            cin >> a;
+            if(!freq[a])
+            {
+                v.pb(a);
+            }
+            freq[a]++;
+        }
+        sort(v.rbegin(),v.rend());
+        for(int i = 0; i < v.size(); i++){
+            if(freq[v[i]] >= k)
+            {
+                ans += C[freq[v[i]]][k];
+                break;
+            }
+            else
+            {
+                k -= freq[v[i]];
+            }
+        }
+        cout << ans;
+        cout << nl;
     }
+    return 0;
 }

@@ -110,7 +110,7 @@ void precompute_factorials() {
 // ----------------------</MATH>-------------------------- 
 
 /****************** Prime Generator **********************/ 
-const int N=1e7+10; int prime[20000010]; 
+const int N=1e6+3; int prime[20000010]; 
 bool isprime[N]; int nprime; 
 template <typename T> void Sieve(T a) 
 {nprime = 0;memset(isprime,true,sizeof(isprime));
@@ -174,18 +174,58 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+#define int long long int
+
+int l[N], r[N];
+int f[N][2];
+basic_string<int> g[N];
+
+// DFS for Tree DP
+void dfs(int x, int parent) {
+    f[x][0] = f[x][1] = 0;
+    for (int child : g[x]) {
+        if (child == parent) continue;
+        dfs(child, x);
+        f[x][0] += max(
+            f[child][0] + abs(l[x] - l[child]),
+            f[child][1] + abs(l[x] - r[child])
+        );
+        f[x][1] += max(
+            f[child][0] + abs(r[x] - l[child]),
+            f[child][1] + abs(r[x] - r[child])
+        );
+    }
+}
 
 void solve() {
+    int n;
+    cin >> n;
 
+    for (int i = 1; i <= n; ++i) {
+        g[i].clear();
+        cin >> l[i] >> r[i];
+    }
+
+    for (int i = 1; i < n; ++i) {
+        int u, v;
+        cin >> u >> v;
+        g[u] += v;
+        g[v] += u;
+    }
+
+    dfs(1, 0);
+    cout << max(f[1][0], f[1][1]) << '\n';
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    precompute_factorials(); 
-    int tc = 1;
+
+    int tc;
     cin >> tc;
-    for (int t = 1; t <= tc; t++) {
+    while (tc--) {
         solve();
     }
+
+    return 0;
 }

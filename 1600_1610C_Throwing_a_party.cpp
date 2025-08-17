@@ -174,9 +174,31 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
-
+bool is_possible(const vector<int>& a, const vector<int>& b, int mid, int n){
+    int cnt = 0;
+    for(int i = 0; i < n; i++){
+        if(cnt <= b[i] && cnt >= mid - 1 - a[i]){
+            cnt++;
+        }
+    }
+    return cnt >= mid;
+}
 void solve() {
-
+    ll n;
+    cin >> n;
+    vi a(n), b(n);
+    for(int i = 0; i < n; i++){
+        cin >> a[i] >> b[i]; 
+    }
+    int low = 0, high = n + 1;
+    while(high - low > 1){
+        int mid = (low + high) / 2;
+        if(is_possible(a, b, mid, n))
+            low = mid;
+        else
+            high = mid;
+    }
+    cout << low << nl;
 }
 
 int32_t main() {

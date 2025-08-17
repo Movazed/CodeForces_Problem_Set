@@ -176,7 +176,23 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
+    int n,k,z;
+    cin >> n >> k >> z;
+    vi a(n + 1), cs(n + 1);
 
+    for(int i = 1; i <=n; i++){
+        cin >> a[i];
+        cs[i] = a[i] + cs[i - 1];
+    }
+    ll ind, mx = 0;
+    for(int i = 1; i <= k; i++){
+        ll repeat = min(z,(k - i + 1) / 2);
+        ll extra = repeat*(a[i] + a[i + 1]);
+        ll end = k + 1 - (2 * repeat);
+        ll sum = cs[end]+extra;
+        mx = max(sum, mx);
+    }
+    cout << mx << nl;
 }
 
 int32_t main() {

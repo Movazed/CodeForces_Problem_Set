@@ -29,7 +29,7 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 #define PI 3.1415926535897932384626433832795l 
 const int MAX_N = 1e5 + 5;
 const ll MOD = 1e9 + 7;
-const ll INF = 1e9;
+const ll INF = 1e18;
 const ld EPS = 1e-9;
 const int MAX_FACT = 1e5 + 5;  // Maximum size for factorials
 int fact[MAX_FACT], ifact[MAX_FACT];
@@ -173,19 +173,44 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
+#define int long long int
 
+string generateString(string str, int k){
+    string s;
+    for(int i = 0; i < k; i++){
+        s += str[i % str.size()];
+    }
+    return s;
+}
+
+string compare(string s1, string s2){
+    for(int i = 0; i < s1.size(); ++i){
+        if(s1[i] < s2[i]){
+            return s1;
+        } else if(s1[i] > s2[i]){
+            return s2;
+        }
+    }
+    return s1;
+}
 
 void solve() {
-
+    ll n, k;
+    cin >> n >> k;
+    string str;
+    cin >> str;
+    string output = generateString(str, k);
+    for(int i = 0; i < n; ++i){
+        output = compare(output, generateString(str.substr(0, i + 1), k));
+    }
+    cout << output << nl;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    int tc = 1;
-    cin >> tc;
-    for (int t = 1; t <= tc; t++) {
+
         solve();
-    }
+
 }

@@ -1,2 +1,1 @@
-
-        cout << "-1" << nl;
+#include<bits/stdc++.h>

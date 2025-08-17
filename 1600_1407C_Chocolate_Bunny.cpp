@@ -174,18 +174,20 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+int n, a, b, i, p[10007], j = n;
 
-void solve() {
-
-}
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     precompute_factorials(); 
-    int tc = 1;
-    cin >> tc;
-    for (int t = 1; t <= tc; t++) {
-        solve();
+    for(cin >> n, j = n; i + 1 < n;)
+    {
+        cout <<"? " << i + 1 << ' '<<n<< endl;
+        cin >> a;
+        cout<<"? "<<n<<' '<<i + 1<<endl;
+        cin >> b;
+        p[a > b ?i++:--n] = max(a, b);
     }
+    for(i=0, cout << "! "; i < j; i++) cout << (p[i] ? p[i]: j) <<' ';
 }

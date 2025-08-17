@@ -176,7 +176,18 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
-
+    ll n;
+    string s;
+    cin >> n >> s;
+    map<int, int> cnt;
+    cnt[0]++;
+    ll sum = 0, total = 0;
+    for(int i = 0; i < n; i++){
+        sum +=(s[i]-'0')-1;
+        total += cnt[sum];
+        cnt[sum]++;
+    }
+    cout << total << endl;
 }
 
 int32_t main() {

@@ -176,8 +176,63 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
+    ll n;
+    cin >> n;
+    vll a(n);
+    for (ll i = 0; i < n; i++)
+        cin >> a[i];
 
+    ll max2 = 0, ansL = 0, ansR = 0;
+    ll l = 0;
+
+    while (l < n) {
+        while (l < n && a[l] == 0) l++;
+        if (l == n) break;
+
+        ll r = l;
+        int negCount = 0;
+        int cnt2 = 0;
+
+        while (r < n && a[r] != 0) {
+            if (a[r] < 0) negCount++;
+            if (abs(a[r]) == 2) cnt2++;
+            r++;
+        }
+        if (negCount % 2 == 0) {
+            if (cnt2 > max2) {
+                max2 = cnt2;
+                ansL = l;
+                ansR = n - r;
+            }
+        } else {
+            ll firstNeg = l, lastNeg = r - 1;
+            while (firstNeg < r && a[firstNeg] > 0) firstNeg++;
+            while (lastNeg >= l && a[lastNeg] > 0) lastNeg--;
+
+            int cntLeft = 0, cntRight = 0;
+            for (ll i = firstNeg + 1; i < r; i++)
+                if (abs(a[i]) == 2) cntLeft++;
+            for (ll i = l; i < lastNeg; i++)
+                if (abs(a[i]) == 2) cntRight++;
+
+            if (cntLeft > max2) {
+                max2 = cntLeft;
+                ansL = firstNeg + 1;
+                ansR = n - r;
+            }
+            if (cntRight > max2) {
+                max2 = cntRight;
+                ansL = l;
+                ansR = n - lastNeg;
+            }
+        }
+
+        l = r + 1;
+    }
+
+    cout << ansL << " " << ansR << "\n";
 }
+
 
 int32_t main() {
     ios_base::sync_with_stdio(0);
