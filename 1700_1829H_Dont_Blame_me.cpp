@@ -247,9 +247,28 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+const int P {1000000007};
 
 void solve() {
+    ll n,k;
+    ll a; ll j;
+    cin >> n >> k;
+    vll B(64), C;
+    while(n--){
+        C = B;
+        cin >> a;
+        C[a]++;
+        for(j = 0; j < 64; j++) 
+            C[j&a] += B[j];
+        for(auto &c: C) c %= P;
+        swap(B, C);
 
+    }
+    for(a = j = 0; j < 64; j++) 
+    if(__builtin_popcountll(j) == k){ 
+        a = (a + B[j]) % P;
+    }
+    cout << a << nl;
 }
 
 int32_t main() {
@@ -261,4 +280,6 @@ int32_t main() {
     for (int t = 1; t <= tc; t++) {
         solve();
     }
+
+
 }

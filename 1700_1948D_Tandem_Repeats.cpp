@@ -249,7 +249,27 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
+    string s;
+    cin >> s;
+    int n = s.length();
 
+    for (int i = n >> 1; i > 0; --i) {
+        int now = 0;
+
+        for (int j = 0; j + i < n; ++j) {
+            if (s[j] == s[j + i] || s[j] == '?' || s[j + i] == '?') {
+                ++now;
+                if (now == i) {
+                    cout << (i << 1) << '\n';
+                    return;
+                }
+            } else {
+                now = 0;
+            }
+        }
+    }
+
+    cout << "0\n";
 }
 
 int32_t main() {

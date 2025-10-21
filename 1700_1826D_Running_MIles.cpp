@@ -249,7 +249,18 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 
 void solve() {
+    ll n, x;
+    ll ans = LLONG_MIN, sum1 = LLONG_MIN, sum2 = LLONG_MIN;
+    cin >> n;
 
+    for (ll i = 1; i <= n; ++i) {
+        cin >> x;
+        ans = max(ans, sum2 + x - i);
+        sum2 = max(sum2, sum1) + x;
+        sum1 = max(sum1, x + i);
+    }
+
+    cout << ans << nl;
 }
 
 int32_t main() {
