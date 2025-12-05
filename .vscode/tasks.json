@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "C:/msys64/ucrt64/bin/g++.exe",
       "args": [
-        "-std=c++23",             // ✅ force C++17
+        "-std=c++23", // ✅ force C++17
         "-O2",
         "-Wall",
         "${file}",
