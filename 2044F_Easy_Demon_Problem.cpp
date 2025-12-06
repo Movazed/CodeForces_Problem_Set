@@ -73,7 +73,7 @@ int main() {
         } else {
             // |x| > MAXX should not occur under given constraints
             cout << "NO\n";
-        }
+        } //neshai nash
     }
 
     return 0;

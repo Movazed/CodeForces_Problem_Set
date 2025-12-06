@@ -248,6 +248,30 @@ bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
 void solve() {
+    int N, M;
+    cin >> N >> M;
+
+    vector<int> A(M);
+    vector<bitset<2001>> Dp(M);
+
+    for (int j = 0; j < M; j++)
+        Dp[j].reset();
+
+    Dp[0][1000] = 1;
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            cin >> A[j];
+            if (A[j] == 1)
+                Dp[j] <<= 1;
+            else
+                Dp[j] >>= 1;
+
+            if (j + 1 < M)
+                Dp[j + 1] |= Dp[j];
+        }
+    }
+    cout << (Dp[M - 1][1000] ? "Yes\n" : "No\n");
 
 }
 
