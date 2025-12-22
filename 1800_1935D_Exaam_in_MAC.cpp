@@ -238,7 +238,7 @@ template <typename T> inline T Cone (T radius,T base, T height)
 #define pb push_back
 #define INPUT std::cin
 #define rall(n) n.rbegin(),n.rend()
-#define lint int64_t
+
 // Constants
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
@@ -247,37 +247,24 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+void solve() {
+    ll n, c, v, e, s;
+    cin >> n >> c; c++;
+    e = 0; s = 0;
 
-int main() {
+    for(int i = 0; i < n; i++) cin >> v, s += v, e += (v % 2 == 0);
+
+    cout << (c * c + n * n - 2 * c * n - 2 * n * e + 2 * e * e + s + c - e) / 2 <<nl;
+}
+
+int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    lint n;
-    if (!(cin >> n)) return 0;
-
-    lint x;
-    lint sm = 0;
-    lint mr = 0;
-    lint idx = 1;
-
-    for (lint i = 0; i < n; ++i) {
-        cin >> x;
-        sm += x;
-        lint req = (sm + idx - 1) / idx;
-        mr = max(mr, req);
-        ++idx;
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        solve();
     }
-
-    lint q;
-    cin >> q;
-    while (q--) {
-        cin >> x;
-        if (x < mr) {
-            cout << -1 << '\n';
-        } else {
-            cout << ( (sm + x - 1) / x ) << '\n';
-        }
-    }
-
     return 0;
 }

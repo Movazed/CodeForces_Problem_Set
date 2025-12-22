@@ -238,7 +238,7 @@ template <typename T> inline T Cone (T radius,T base, T height)
 #define pb push_back
 #define INPUT std::cin
 #define rall(n) n.rbegin(),n.rend()
-#define lint int64_t
+
 // Constants
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
@@ -247,37 +247,76 @@ bool odd(ll num) { return ((num & 1) == 1); }
 bool even(ll num) { return ((num & 1) == 0); }
 ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); }
 
+void solve() {
+    int n, m;
+    cin >> n >> m;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    vector<pair<int, int>> adj[n];
 
-    lint n;
-    if (!(cin >> n)) return 0;
+    for(int i = 0; i < m; i++){
+        int u, v, w;
+        cin >> u >> v >> w;
+        u--, v--;
 
-    lint x;
-    lint sm = 0;
-    lint mr = 0;
-    lint idx = 1;
-
-    for (lint i = 0; i < n; ++i) {
-        cin >> x;
-        sm += x;
-        lint req = (sm + idx - 1) / idx;
-        mr = max(mr, req);
-        ++idx;
+        adj[u].pb({v, w});
+        adj[v].pb({u, w});
     }
 
-    lint q;
-    cin >> q;
-    while (q--) {
-        cin >> x;
-        if (x < mr) {
-            cout << -1 << '\n';
-        } else {
-            cout << ( (sm + x - 1) / x ) << '\n';
+    vi s(n);
+
+    for(int i = 0; i < n; i++){
+        cin >> s[i];
+    }
+
+    vector<vector<ll>> dist(n, vector<ll>(n, 1e17));
+    vector<vector<int>> vis(n, vector<int>(n, 0));
+    priority_queue<array<ll, 3>, vector<array<ll,3>>, greater<array<ll, 3>>> pq;
+
+    dist[0][0] = 0;
+
+    pq.push({0ll, 0, 0});
+
+    while(!pq.empty()){
+        int city = pq.top()[1];
+        int bike = pq.top()[2];
+        pq.pop();
+
+        if(city == n - 1){
+            cout << dist[city][bike] << nl;
+            return;
+        }
+
+        if(vis[city][bike]) continue;
+
+        vis[city][bike] = 1;
+
+        for(auto it: adj[city]){
+            int nbr = it.first;
+            int wt = it.second;
+
+            int newBike = bike;
+
+            if(s[nbr] < s[bike]) newBike = nbr;
+
+            if(dist[nbr][newBike] < dist[city][bike] + wt * s[bike]) continue;
+
+
+            dist[nbr][newBike] = dist[city][bike] + wt * s[bike];
+            pq.push({dist[nbr][newBike], nbr, newBike});
         }
     }
 
+    cout << -1 << endl;
+}
+
+int32_t main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        solve();
+    }
     return 0;
 }
