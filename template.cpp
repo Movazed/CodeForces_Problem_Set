@@ -249,6 +249,7 @@ ll getRandomNumber(ll l, ll r) { return uniform_int_distribution<ll>(l,r)(rng); 
 
 void solve() {
 
+    
 }
 
 int32_t main() {
